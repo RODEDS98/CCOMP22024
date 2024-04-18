@@ -30,6 +30,8 @@ void imprimir_primo(long cantidad){
 
 int main(){
 
+    
+
     long long numero,cantidad;
     bool esprimo;
 
