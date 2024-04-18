@@ -1,2 +1,2 @@
-# CCOMP22024
-CCOMP
+# project1
+Repositorio Edgard Rodriguez

@@ -1,4 +1,3 @@
-
 //ejercicio 3.12
 
 #include <iostream>
@@ -7,54 +6,41 @@
 class Date{
     public:
         explicit Date(int m , int d, int y) :day{d}, year{y} {
-            if ( m >= 1 && m<=12)            {
-                month =m;
-            }
-            if ( y >= 2051 || y<=1899)            {
-                year =1900;
-            }
-            if (d >=1 && d <=31)
-                {
-                if (isLeapYear() && month =2){
-                    do {
-                        std::cout<<"ingrese un dia valido para el mes de febrero en año viciesto"<<std::endl;                
-                    }
-                    while (!(d >=1 && d <=29));
-                        day =y; 
-                    }
-                else if (!(isLeapYear()) && month =2){
+            setDay(d);
+            setMonth(m);
+            setYear(y);  
+        } 
+
+        void setDay(int d){
+                
+        if (d >=1 && d <=31){
+            if (isLeapYear() && month ==2){   //Si es viciesto y el mes es febrero:
+                do {
+                    std::cout<<"ingrese un dia valido para el mes de febrero en año viciesto"<<std::endl;                
+                }
+                while (!(d >=1 && d <=29));
+                    day =d; 
+                }
+                else if (!(isLeapYear()) && month ==2){
                     do {
                         std::cout<<"ingrese un dia valido para el mes de febrero "<<std::endl;                
                     }
                     while (!(d >=1 && d <=28));
-                        day =y; 
-                    }
-                else
-                    if ((month =4 || month =6 || month =9 || month =11 ) && (day  <=31 || day <=1 )){
-
-                    day =y;
-                    else{
-                        do {
-                        std::cout<<"ingrese un dia valido para un mes de solo 30 dias "<<std::endl;                
-                        }
-                        while (!(d >=1 && d <=30));
-                        day =y;
-
-                    }
-                }     
-                else
-                    day =y;
+                        day =d; 
                 }
+                else if ((month == 4 || month ==6 || month == 9 || month == 11 ) && (day  <= 31 || day >= 1 ))
 
-            
-        }
-        void setDay(int d){
-                
-            do {
-                std::cout<<"ingrese un dia valido"<<std::endl;                
+                    day =d;
+
+                else {
+                    do {
+                    std::cout<<"ingrese un dia valido para un mes de solo 30 dias "<<std::endl;                
+                    }
+                    while (!(d >=1 && d <=30));
+                    day =d;
+
+                }
             }
-            while (!(d >=1 && d <=31));
-            day =d;
 
         }
         
@@ -68,7 +54,11 @@ class Date{
         }
 
         void setYear(int y){
-            year= y;
+            if (!(y<2183 && y>1900)) {
+                y=1500;
+            }
+            else
+                year= y;
         }
 
         int getDay() const{
