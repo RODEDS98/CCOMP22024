@@ -42,8 +42,12 @@ class Date{
             std::cout << day <<"/"<< month << "/" << year << std::endl;   //////////FALTA
         }
 
-        bool slLeapYear() const{
-            if (year)
+        bool isLeapYear() const {
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+            return true;
+        } else {
+            return false;
+        }
         }
     private:
         int day;

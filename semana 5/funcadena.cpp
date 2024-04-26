@@ -1,39 +1,44 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
 
 int contar_numeros(string cad){
     int counter{0};
-    for(int i=0; i < cad.lehght(); i++){
-            int val = static_cast <int> (cad.at());
-    if(val=48&&val=59)
-        counter++;
-
+    for(int i=0; i < cad.size(); i++){
+        int val = static_cast <int> (cad.at(i));
+        if(val>=48 && val<=57)
+            counter++;
+    
+    }
+    return counter;
 }
 
-
-int MayustoMinus(string cad){
-        string c;
-        for(int i=0; cad.size(); i++){
-        c=cad.at(i);
-        int val=static_cast <int> (c);
-        if(val >= 97 && val <= 122){
-            cad.at(i) = c -32;   
-        }
+string MinustoMayus(string cad){
+        char c;
+        for(int i=0;i < cad.size(); i++){
+            c=cad.at(i);
+            int val=static_cast<int> (c);
+            if(val >= 97 && val <= 122){
+                cad.at(i) = c -32;   
+            }
     }
 
-    cout << cad << endl;
+    return cad;
 }
 
 
 
 int main(){
 
+    string numero;
+    cout<< "Ingrese una cadena de numeros  \n";
+    getline(cin,numero);
+    cout<<contar_numeros(numero);
+    cout<<"\nIngrese una cadena de letras \n ";
 
-    cout<< "Ingrese un numero \n"; cin>> numero;
-    cout<<"Ingrese una cadena: \n ";
-    getline(cin,cad);
-    char c;
-
+    getline(cin,numero);
+    cout<<MinustoMayus(numero);
 
     return 0;
 }

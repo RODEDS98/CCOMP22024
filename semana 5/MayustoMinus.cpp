@@ -9,7 +9,7 @@ int main(){
     cout<<"Ingrese una cadena: ";
     getline(cin,cad);
     char c;
-    for(int i=0; cad.size(); i++){
+    for(int i=0; i < cad.size(); i++){
         c=cad.at(i);
         int val=static_cast <int> (c);
         if(val >= 97 && val <= 122){
