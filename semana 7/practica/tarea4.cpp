@@ -4,101 +4,82 @@
 using namespace std;
 
 const int N = 8;
+int tablero[N][N] = {0};
+int heuristica[N][N] = {22,22,22,22,22,22,22,22,
+                        22,24,24,24,24,24,24,22,
+                        22,24,26,26,26,26,24,22,
+                        22,24,26,28,28,26,24,22,
+                        22,24,26,28,28,26,24,22,
+                        22,24,26,26,26,26,24,22,
+                        22,24,24,24,24,24,24,22,
+                        22,22,22,22,22,22,22,22 };
+int reynas = 0;
 
-bool posValida(array<array<int,N>,N>& tablero, int row, int col) {
-    
-    for (int i = 0; i < row; i++) {
-        if (tablero[i][col] == 1) {
-            return false;
-        }
-    }
-    
-    for (int i = 0; i < col; i++) {
-        if (tablero[row][i] == 1) {
-            return false;
-        }
-    }
+bool validar_mov(int x, int y) {
+    if (tablero[x][y] != 0) return false;
 
-    int i = row;
-    int j = col;
-    while (i >= 0 && j >= 0) {
-        if (tablero[i][j] == 1) {
-            return false;
-        }
-        i--;
-        j--;
-    }    
-    
-    i = row;
-    j = col;
-    while (i >= 0 && j < N) {
-        if (tablero[i][j] == 1) {
-            return false;
-        }
-        i--;
-        j++;
+    for (int i = 0; i < N; ++i) {
+        if (tablero[i][y] != 0 || tablero[x][i] != 0) return false;
     }
 
-    i = row;
-    j = col; 
-    
-    while (i < N && j >= 0) {
-        if (tablero[i][j] == 1) {
-            return false;
-        }
-        i++;
-        j--;
+    for (int i = x, j = y; i >= 0 && j >= 0; --i, --j) {
+        if (tablero[i][j] != 0) return false;
     }
 
+    for (int i = x, j = y; i < N && j < N; ++i, ++j) {
+        if (tablero[i][j] != 0) return false;
+    }
 
-    
-    for (int i = row, j = col; i < N && j < N; i++, j++) {
-        if (tablero[i][j] == 1) {
-            return false;
-        }
+    for (int i = x, j = y; i >= 0 && j < N; --i, ++j) {
+        if (tablero[i][j] != 0) return false;
+    }
+
+    for (int i = x, j = y; i < N && j >= 0; ++i, --j) {
+        if (tablero[i][j] != 0) return false;
     }
 
     return true;
 }
 
-void imprimirTablero(array<array<int,N>,N> &tablero){
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
+bool colocar_reyna(int x) {
+    if (x == N) return true;
+
+    for (int y = 0; y < N; ++y) {
+        if (validar_mov(x, y)) {
+            tablero[x][y] = 1;
+            ++reynas;
+            
+            if (colocar_reyna(x + 1)) return true;
+            
+            tablero[x][y] = 0;
+            --reynas;
+        }
+    }
+
+    return false;
+}
+
+void imprimirTablero() {
+    cout << "________________\n";
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
             cout << tablero[i][j] << " ";
         }
         cout << endl;
     }
-}
-void reynas(array<array<int,N>,N>& tablero,int coi,int contador) {
-    
-   for(int i=coi;i<N;i++){
-        for(int j=0;j<N;j++){
-                
-            if(posValida(tablero,i,j)){
-                tablero[i][j]=1;
-                contador++;
-                
-                if(contador==N){
-                    imprimirTablero(tablero);
-                    cout<<"----------------"<<endl;
-                }else{
-                    reynas(tablero,i+1,contador);                    
-                    
-                }
-                if(tablero[i][j]==1){
-                    tablero[i][j]=0;
-                    contador--;
-                }
-                
-            }
-        }
-   }    
+    cout << "________________\n";
+    cout << "reynas : " << reynas << endl;
+    cout << "________________\n";
+    cout << "columna   fila\n";
 }
 
 int main() {
+    if (colocar_reyna(0)) {
+        cout << "Solución encontrada:" << endl;
+        imprimirTablero();
+    } else {
+        cout << "No se encontró solución." << endl;
+    }
 
-    array<array<int,N>,N>tablero{8, 0};
-    reynas(tablero,0,0);
     return 0;
-
 }
